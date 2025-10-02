@@ -1,0 +1,174 @@
+/* lore.css - Styles for Fantaasiamaailma lore pages */
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: large;
+  color: #000000;
+  background: url('/pictures/bg.png');
+  background-size: cover;
+  background-position: center;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  font-size: large;
+}
+
+ header {
+  background: #BF9F51;
+  padding: 12px 0;
+  border: #000000 3px solid;
+}
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+}
+.logomark {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #3EC6E0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+.site-sub {
+  font-size: 12px;
+  color: #000000;
+}
+.navlinks a {
+  margin: 0 10px;
+  color: #000000;
+  text-decoration: none;
+}
+.navlinks a:hover {
+  color: #080808;
+}
+.btn-ghost {
+  border: 1px solid #000000;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: #000000;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-size: 2.5em;
+    border-bottom: 2px solid #bfa76f;
+    padding-bottom: 0.3em;
+}
+
+h2 {
+    display: flex;
+    flex-direction: row;
+    font-size: 1.8em;
+    padding-bottom: 0.2em;
+}
+
+h3 {
+    font-size: 1.3em;
+}
+
+p {
+    line-height: 1.7;
+    margin-bottom: 1.2em;
+}
+
+a {
+    color: #8a6d3b;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #bfa76f;
+}
+
+ul, ol {
+    margin-left: 2em;
+    margin-bottom: 1em;
+}
+
+blockquote {
+    border-left: 4px solid #bfa76f;
+    background: #f9f6ee;
+    color: #6b5b3e;
+    margin: 1.5em 0;
+    padding: 1em 1.5em;
+    font-style: italic;
+}
+
+code {
+    background: #ece6d6;
+    color: #4b3e2e;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: 'Fira Mono', monospace;
+    font-size: 0.95em;
+}
+
+.lore-1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.lore-image {
+    width: 30rem;
+    height: auto ;
+    border: #000000 4px solid;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0,0,0,0.6);
+  color: white
+}
+.lore-image1 {
+  display: flex;
+  flex-direction: column;
+    width: 30rem;
+    height: auto ;
+    border: #000000 4px solid;
+}
+.lore-article {
+  display: flex;
+}
+
+.lore-text2{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.lore-container {
+  width: 90%;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  border-radius: 12px;
+  border: #000000 4px solid;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+
+
+
