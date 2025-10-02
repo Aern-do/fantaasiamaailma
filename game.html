@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap");
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BOW — Esileht</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container topbar">
+        <a class="logo" href="#">
+          <div class="logomark"><strong>BOW</strong></div>
+          <div>
+            <div class="site-title">BOW</div>
+            <div class="site-sub">Pudelrahvaste ajastu</div>
+          </div>
+        </a>
+        <nav class="navlinks">
+          <a href="uudised.html">Uudised</a>
+          <a href="maailmakaart.html">Maailmakaart</a>
+          <a href="lore.html">Lore</a>
+          <a href="game.html">Mäng</a>
+          <a class="btn btn-ghost" href="cyoa.html"
+            >Choose your own adventure</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </main>
+
+    <footer>
+      <p>© 2025 BOW</p>
+    </footer>
+
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+
+      let bottles = [];
+      let particles = [];
+      let score = 0;
+      let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+
+      const bottleImg = new Image();
+      bottleImg.src =
+        "https://png.pngtree.com/png-clipart/20240418/original/pngtree-compressed-plastic-bottle-png-image_14879043.png";
+
+      class Particle {
+        constructor(x, y, color) {
+          this.x = x;
+          this.y = y;
+          this.vx = (Math.random() - 0.5) * 6;
+          this.vy = (Math.random() - 1) * 6;
+          this.size = Math.random() * 4 + 2;
+          this.alpha = 1;
+          this.color = color;
+          this.gravity = 0.15;
+        }
+
+        update() {
+          this.vy += this.gravity;
+          this.x += this.vx;
+          this.y += this.vy;
+          this.alpha -= 0.005;
+        }
+
+        draw() {
+          ctx.globalAlpha = this.alpha;
+          ctx.fillStyle = this.color;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      class Bottle {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.vy = -(5 + Math.random() * 3);
+          this.vx = (2 + Math.random() - 0.5) * 0.6;
+          this.width = 50;
+          this.height = 50;
+          this.gravity = 0.05;
+          this.dead = false;
+        }
+
+        update() {
+          this.vy += this.gravity;
+          this.y += this.vy;
+          this.x += this.vx;
+
+          if (this.x < 25 || this.x > canvas.width - 25) {
+            this.vx *= -1;
+          }
+
+          if (this.y > canvas.height + 50) {
+            this.dead = true;
+          }
+        }
+
+        draw() {
+          ctx.drawImage(
+            bottleImg,
+            this.x - this.width / 2,
+            this.y - this.height,
+            this.width,
+            this.height
+          );
+        }
+
+        isHit(mx, my) {
+          return (
+            mx > this.x - this.width / 2 &&
+            mx < this.x + this.width / 2 &&
+            my > this.y - this.height &&
+            my < this.y
+          );
+        }
+      }
+
+      canvas.addEventListener("mousemove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+
+      canvas.addEventListener("click", () => {
+        for (let i = bottles.length - 1; i >= 0; i--) {
+          if (bottles[i].isHit(mouse.x, mouse.y)) {
+            let hitX = bottles[i].x;
+            let hitY = bottles[i].y - bottles[i].height / 2;
+
+            for (let p = 0; p < 25; p++) {
+              particles.push(new Particle(hitX, hitY, "lightblue"));
+            }
+
+            bottles.splice(i, 1);
+            score++;
+            break;
+          }
+        }
+      });
+
+      function spawnBottle() {
+        const x = Math.random() * (canvas.width - 50) + 25;
+        const y = canvas.height - 30;
+        bottles.push(new Bottle(x, y));
+      }
+      setInterval(spawnBottle, 1800);
+
+      function gameLoop() {
+        ctx.fillStyle = "#111";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = bottles.length - 1; i >= 0; i--) {
+          bottles[i].update();
+          bottles[i].draw();
+          if (bottles[i].dead) bottles.splice(i, 1);
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const part = particles[i];
+          part.update();
+          part.draw();
+          if (part.alpha <= 0) {
+            particles.splice(i, 1);
+          }
+        }
+
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(mouse.x - 25, mouse.y);
+        ctx.lineTo(mouse.x + 25, mouse.y);
+        ctx.moveTo(mouse.x, mouse.y - 25);
+        ctx.lineTo(mouse.x, mouse.y + 25);
+        ctx.stroke();
+
+        ctx.fillStyle = "white";
+        ctx.font = "20px Orbitron, sans-serif";
+        ctx.fillText("Score: " + score, 20, 30);
+
+        requestAnimationFrame(gameLoop);
+      }
+
+      bottleImg.onload = () => {
+        gameLoop();
+      };
+    </script>
+  </body>
+</html>
