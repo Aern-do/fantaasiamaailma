@@ -49,6 +49,9 @@
       bottleImg.src =
         "https://png.pngtree.com/png-clipart/20240418/original/pngtree-compressed-plastic-bottle-png-image_14879043.png";
 
+      const bgImg = new Image();
+      bgImg.src = "./pictures/gameBg.png";
+
       class Particle {
         constructor(x, y, color) {
           this.x = x;
@@ -155,7 +158,9 @@
       setInterval(spawnBottle, 1800);
 
       function gameLoop() {
-        ctx.fillStyle = "#111";
+        ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         for (let i = bottles.length - 1; i >= 0; i--) {
