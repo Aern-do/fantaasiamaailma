@@ -1,0 +1,123 @@
+
+
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  font-size: large;
+  color: #000000;
+  background: url('/pictures/mapbg.png') center no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  font-size: large;
+}
+header {
+  background: #BF9F51;
+  padding: 12px 0;
+  border: #000000 3px solid;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.logomark {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #3ec6e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+}
+
+.site-sub {
+  font-size: 12px;
+  color: #000000;
+}
+
+.navlinks a {
+  margin: 0 10px;
+  color: #000000;
+  text-decoration: none;
+}
+
+.navlinks a:hover {
+  color: #000000;
+}
+
+.btn-ghost {
+  border: 1px solid #000000;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.world-map {
+    background: #121629;
+    border: 4px solid #000000;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    width: 80vw;
+    height: 70vh;
+    position: relative;
+    overflow: hidden;
+    padding: 30px 30px 30px 30px;
+}
+
+
+
+.map-marker:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 8px #eebbc3;
+}
+
+/* Optional: Tooltip for markers */
+.marker-tooltip {
+    position: absolute;
+    background: #232946;
+    color: #eebbc3;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.map-marker:hover .marker-tooltip {
+    opacity: 1;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  background: rgba(0,0,0,0.6);
+  color: white
+}
