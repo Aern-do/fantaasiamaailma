@@ -12,7 +12,7 @@
   <body>
     <header>
       <div class="container topbar">
-        <a class="logo" href="index.html`">
+        <a class="logo" href="index.html">
           <div class="logomark"><strong>BOW</strong></div>
           <div>
             <div class="site-title">BOW</div>
@@ -28,13 +28,32 @@
       </div>
     </header>
 
-    <main class="container">
-      <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <main class="container" style="display: flex; justify-content: center;">
+      <canvas id="gameCanvas" width="850" height="675"></canvas>
     </main>
 
-    <footer>
-      <p>© 2025 BOW</p>
-    </footer>
+    <footer style="position: absolute; bottom: 0; width: 100%;">
+    <div class="footer-container">
+      <div class="footer-text" style="text-align: left; font-size: 14px;">
+        <p>BOW Headquarters 12 Glassbridge Lane,<br> BOW District New Harbor,<br> BN 40211</p>
+        <p> © 2125 BOW. All rights reserved.</p>
+      </div>
+      <div class="footer-icons">
+        <a href="#">
+          <div class="icons">
+            <img src="images/insta1.png" class="icons" width="46" height="46">
+            <p>InaBottle</p>
+          </div>
+        </a>
+        <a href="#">
+          <div class="icons">
+            <img src="images/fb1.png" width="46" height="46">
+            <p>Bottlebook</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </footer>
 
     <audio id="bgMusic" loop preload="auto">
       <source src="./audio/ost.mp3#t=00:01:20" type="audio/mpeg" />

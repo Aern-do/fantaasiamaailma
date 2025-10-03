@@ -1,13 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>BOW Maailmakaart</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="maailmakaart.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Interactive Map — Bottleverse (Hotspots)</title>
+  <link rel="stylesheet" href="maailmakaart.css">
+  <style>
+    :root{
+      --accent: #ffd86b;
+      --accent-strong: rgba(255,216,107,0.22);
+      --text: #111;
+      --bg: #f7f3ef;
+      --tooltip-bg: rgba(17,17,17,0.9);
+    }
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial; background: url(pictures/mapbg.png); color:var(--text); padding:18px}
+
+    .map-wrap{position:relative; max-width:1100px; margin:12px auto; border-radius:10px; overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,0.12)}
+    .map-image{display:block; width:100%; height:auto; filter:contrast(.98) saturate(.9)}
+
+    .map-hotspot{
+      position:absolute; left:var(--x,50%); top:var(--y,50%);
+      transform:translate(-50%,-50%);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .map-hotspot button{
+      width:44px; height:44px; border-radius:50%; border:3px solid rgba(255,255,255,0.6);
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.06));
+      box-shadow:0 2px 8px rgba(0,0,0,0.18);
+      cursor:pointer; display:flex; align-items:center; justify-content:center;
+      transition:transform .14s ease, box-shadow .14s ease;
+      backdrop-filter: blur(2px);
+    }
+    .map-hotspot button:focus, .map-hotspot button:hover{transform:translateY(-6px) scale(1.06); box-shadow:0 8px 22px rgba(0,0,0,0.28)}
+
+    .map-hotspot.active button::after{
+      content:""; position:absolute; width:60px; height:60px; border-radius:50%; z-index:-1; background:var(--accent-strong); transform:translate(-50%,-50%); left:50%; top:50%; animation:pop 900ms ease-out;
+    }
+    @keyframes pop{ from{opacity:0; transform:translate(-50%,-50%) scale(.6)} to{opacity:1; transform:translate(-50%,-50%) scale(1.2)} }
+
+    .tooltip{
+      position:fixed; pointer-events:none; max-width:360px; padding:12px 14px; border-radius:10px; color:#fff; background:var(--tooltip-bg);
+      transform-origin:left top; transition:opacity .12s ease, transform .12s ease; opacity:0; z-index:9999;
+    }
+    .tooltip.show{opacity:1}
+    .tooltip h4{margin:0 0 6px; font-size:15px}
+    .tooltip p{margin:0; font-size:13px; line-height:1.35; color:rgba(255,255,255,0.9)}
+
+    .side-text{max-width:1100px; margin:18px auto; display:flex; gap:18px}
+    .panel{flex:1; background:#fff; padding:14px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    .panel p{margin:0 0 10px}
+    .highlight{background:linear-gradient(90deg,var(--accent) , transparent); padding:2px 6px; border-radius:4px; transition:box-shadow .14s ease}
+
+    @media (max-width:600px){ .map-hotspot button{width:60px;height:60px} .tooltip{max-width:92vw} }
+  </style>
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-<header>
+  <header>
     <div class="container topbar">
       <a class="logo" href="index.html">
         <div class="logomark"><strong>BOW</strong></div>
@@ -24,13 +73,136 @@
       </nav>
     </div>
   </header>
-    <main>
-        <section class="map-container">
-            <img src="/pictures/map.png" alt="BOW kaart">
-        </section>
-    </main>
-     <footer>
-    <p>© 2125 BOW</p>
+  <div class="map-wrap" id="mapWrap">
+    <img src="pictures/map.png" alt="Map" class="map-image" id="mapImage">
+
+    <div class="map-hotspot" data-id="oasis" style="--x:56%;--y:45%;">
+      <button aria-describedby="tip" aria-haspopup="true" data-title="Sacred Oasis" data-desc="A shrinking pool worshipped by the Water Cult. once a vast pool, now only a shimmer. Pilgrims travel here for the Great Refill.">💧</button>
+    </div>
+
+    <div class="map-hotspot" data-id="forge" style="--x:78%;--y:35%;">
+      <button aria-describedby="tip" aria-haspopup="true" data-title="Metal Forges" data-desc="Rumbling forges where Metal bottles are born. Metal Forges — the clang of hammer and anvil echoes across the borderlands.">⚙️</button>
+    </div>
+    <div class="map-hotspot" data-id="desert" style="--x:20%;--y:80%;">
+      <button data-title="Glass Desert" data-desc="Endless sands where Glass bottles first emerged.">🏜</button>
+    </div>
+    <div class="map-hotspot" data-id="plastic" style="--x:15%;--y:45%;">
+      <button data-title="Plastic Ghetto" data-desc="Crowded district of worn plastic bottles, forced into endless labor.">🧴</button>
+    </div>
+    <div class="map-hotspot" data-id="lava" style="--x:85%;--y:85%;">
+      <button data-title="Lava Rivers" data-desc="Fiery streams of molten lava, nearly impossible to cross, radiating eternal heat and danger.">🌋</button>
+    </div>
+    <div class="map-hotspot" data-id="crystal" style="--x:58%;--y:25%;">
+      <button data-title="Crystal Castle" data-desc="Legendary fortress built of shining crystals, hiding ancient secrets and treasures.">🏰</button>
+    </div>
+    
+  </div>
+  <footer>
+    <div class="footer-container">
+      <div class="footer-text" style="text-align: left; font-size: 14px;">
+        <p>BOW Headquarters 12 Glassbridge Lane,<br> BOW District New Harbor,<br> BN 40211</p>
+        <p> © 2125 BOW. All rights reserved.</p>
+      </div>
+      <div class="footer-icons">
+        <a href="#">
+          <div class="icons">
+            <img src="images/insta1.png" class="icons" width="46" height="46">
+            <p>InaBottle</p>
+          </div>
+        </a>
+        <a href="#">
+          <div class="icons">
+            <img src="images/fb1.png" width="46" height="46">
+            <p>Bottlebook</p>
+          </div>
+        </a>
+      </div>
+    </div>
   </footer>
+
+\  <div id="tooltip" class="tooltip" role="dialog" aria-hidden="true">
+    <h4 id="tipTitle"></h4>
+    <p id="tipDesc"></p>
+  </div>
+  <script>
+    (function(){
+      const hotspots = document.querySelectorAll('.map-hotspot button');
+      const tooltip = document.getElementById('tooltip');
+      const tipTitle = document.getElementById('tipTitle');
+      const tipDesc = document.getElementById('tipDesc');
+      let activeId = null;
+
+      function showTip(btn){
+        const parent = btn.closest('.map-hotspot');
+        const id = parent && parent.dataset.id;
+        const title = btn.dataset.title || '';
+        const desc = btn.dataset.desc || '';
+
+        tipTitle.textContent = title;
+        tipDesc.textContent = desc;
+        tooltip.setAttribute('aria-hidden', 'false');
+        tooltip.classList.add('show');
+
+        if(activeId) deactivateActive();
+        activeId = id;
+        if(id){
+          document.querySelectorAll('[data-region="'+id+'"]')
+            .forEach(n=>n.classList.add('highlight'));
+          parent.classList.add('active');
+        }
+
+        const rect = btn.getBoundingClientRect();
+        const ttWidth = tooltip.offsetWidth;
+        let left = rect.right + 8; 
+        let top = rect.top - 8;
+        if(left + ttWidth > window.innerWidth - 12) left = rect.left - ttWidth - 8;
+        if(top < 8) top = rect.bottom + 8;
+
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+      }
+
+      function hideTip(btn){
+        tooltip.classList.remove('show');
+        tooltip.setAttribute('aria-hidden', 'true');
+        deactivateActive();
+      }
+
+      function deactivateActive(){
+        if(!activeId) return;
+        document.querySelectorAll('[data-region="'+activeId+'"]')
+          .forEach(n=>n.classList.remove('highlight'));
+        document.querySelectorAll('.map-hotspot[data-id="'+activeId+'"]')
+          .forEach(n=>n.classList.remove('active'));
+        activeId = null;
+      }
+
+      hotspots.forEach(btn => {
+        btn.addEventListener('mouseenter', ()=> showTip(btn));
+        btn.addEventListener('mouseleave', ()=> hideTip(btn));
+        btn.addEventListener('focus', ()=> showTip(btn));
+        btn.addEventListener('blur', ()=> hideTip(btn));
+
+        btn.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const parent = btn.closest('.map-hotspot');
+          const id = parent.dataset.id;
+          if(parent.classList.contains('active') && tooltip.classList.contains('show')){
+            hideTip(btn);
+          } else {
+            showTip(btn);
+          }
+        })
+      });
+
+      document.addEventListener('keydown',(e)=>{
+        if(e.key === 'Escape') hideTip();
+      });
+
+      window.addEventListener('scroll', ()=> { if(tooltip.classList.contains('show')) tooltip.classList.remove('show'); });
+      window.addEventListener('resize', ()=> { if(tooltip.classList.contains('show')) tooltip.classList.remove('show'); });
+
+    })();
+  </script>
 </body>
 </html>
