@@ -87,8 +87,8 @@
           this.y = y;
           this.vy = -(5 + Math.random() * 3);
           this.vx = (2 + Math.random() - 0.5) * 0.6;
-          this.width = 50;
-          this.height = 50;
+          this.width = 50 + 32;
+          this.height = 50 + 32;
           this.gravity = 0.05;
           this.dead = false;
         }
@@ -103,6 +103,7 @@
           }
 
           if (this.y > canvas.height + 50) {
+            score -= 1
             this.dead = true;
           }
         }
