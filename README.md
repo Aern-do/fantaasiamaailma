@@ -37,9 +37,8 @@ Lehekülgede lõppviimistlus ja Stiili ühtlustamine
 <img width="2540" height="3000" alt="image" src="https://github.com/user-attachments/assets/4f36d182-a021-4046-a794-49b23675922a" />
 
 
-# Tagasiside
+# Meeskond ja panused
 
-Meeskond ja panused
 <br>
 Mikhail Kucherenko - sisu ideed, õpetaja
 <br>
