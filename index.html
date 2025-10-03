@@ -85,6 +85,29 @@
       </div>
     </div>
   </footer>
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup" id="popup">
+      <img src="images/ageveri.png" alt="Popup Image" class="popup-image">
+    </div>
+  </div>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('popupOverlay');
+    const popup = document.getElementById('popup');
+    setTimeout(() => {
+      overlay.style.display = 'flex';        
+      requestAnimationFrame(() => {          
+        popup.classList.add('show');         
+      });
+    }, 1000);
+    popup.addEventListener('click', () => {
+      popup.classList.remove('show');        
+      setTimeout(() => {
+        overlay.style.display = 'none';      
+      }, 400); 
+    });
+  });
+</script>
 </body>
 </html>
 
