@@ -119,36 +119,3 @@ body {
       font-size: 16px;
       line-height: 1.5;
     }
-
-  
-    footer {
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
-      font-size: 14px;
-      color: gray;
-    }
-
-        
-    
-
-    .footer-icons {
-        display: flex;
-        flex-direction: column;
-        gap: 8px; 
-        margin-left: auto; 
-        margin-right: 0;
-        justify-content: end;
-        width: 10%;
-    }
-
-    .icons {
-       display: flex;
-       height: 50px;
-       margin-left: auto; 
-      margin-right: 0;
-    }
-
-    .footer-container{
-      display: flex;
-    }
