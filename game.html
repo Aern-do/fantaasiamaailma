@@ -12,7 +12,7 @@
   <body>
     <header>
       <div class="container topbar">
-        <a class="logo" href="#">
+        <a class="logo" href="index.html`">
           <div class="logomark"><strong>BOW</strong></div>
           <div>
             <div class="site-title">BOW</div>
@@ -36,6 +36,12 @@
       <p>© 2025 BOW</p>
     </footer>
 
+    <audio id="bgMusic" loop preload="auto">
+      <source src="./audio/ost.mp3#t=00:01:20" type="audio/mpeg" />
+      Your browser does not support the audio tag.
+    </audio>
+
+
     <script>
       const canvas = document.getElementById("gameCanvas");
       const ctx = canvas.getContext("2d");
@@ -51,6 +57,16 @@
 
       const bgImg = new Image();
       bgImg.src = "./pictures/gameBg.png";
+
+      const bgMusic = document.getElementById("bgMusic");
+      const breakMusic = document.getElementById("breakMusic");
+
+      document.addEventListener("click", () => {
+        if (bgMusic.paused) {
+          bgMusic.volume = 0.3;
+          bgMusic.play();
+        }
+      });
 
       class Particle {
         constructor(x, y, color) {
@@ -103,7 +119,7 @@
           }
 
           if (this.y > canvas.height + 50) {
-            score -= 1
+            score -= 1;
             this.dead = true;
           }
         }
@@ -146,6 +162,10 @@
 
             bottles.splice(i, 1);
             score++;
+
+            let sfx = new Audio("./audio/break.mp3");
+            sfx.play().catch((e) => console.log("Play error:", e));
+
             break;
           }
         }
