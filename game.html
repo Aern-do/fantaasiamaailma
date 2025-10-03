@@ -28,38 +28,14 @@
       </div>
     </header>
 
-    <main class="container" style="display: flex; justify-content: center;">
+    <main class="container" style="display: flex; justify-content: center">
       <canvas id="gameCanvas" width="850" height="675"></canvas>
     </main>
-
-    <footer style="position: absolute; bottom: 0; width: 100%;">
-    <div class="footer-container">
-      <div class="footer-text" style="text-align: left; font-size: 14px;">
-        <p>BOW Headquarters 12 Glassbridge Lane,<br> BOW District New Harbor,<br> BN 40211</p>
-        <p> © 2125 BOW. All rights reserved.</p>
-      </div>
-      <div class="footer-icons">
-        <a href="#">
-          <div class="icons">
-            <img src="images/insta1.png" class="icons" width="46" height="46">
-            <p>InaBottle</p>
-          </div>
-        </a>
-        <a href="#">
-          <div class="icons">
-            <img src="images/fb1.png" width="46" height="46">
-            <p>Bottlebook</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </footer>
 
     <audio id="bgMusic" loop preload="auto">
       <source src="./audio/ost.mp3#t=00:01:20" type="audio/mpeg" />
       Your browser does not support the audio tag.
     </audio>
-
 
     <script>
       const canvas = document.getElementById("gameCanvas");
@@ -73,6 +49,16 @@
       const bottleImg = new Image();
       bottleImg.src =
         "https://png.pngtree.com/png-clipart/20240418/original/pngtree-compressed-plastic-bottle-png-image_14879043.png";
+
+      const bottle2Img = new Image();
+      bottle2Img.src =
+        "https://static.vecteezy.com/system/resources/previews/050/091/562/non_2x/plastic-bottle-of-water-free-png.png";
+
+      const bottle3Img = new Image();
+      bottle3Img.src =
+        "https://www.freeiconspng.com/uploads/water-bottle-png-10.png";
+
+      const bottleImages = [bottleImg, bottle2Img, bottle3Img];
 
       const bgImg = new Image();
       bgImg.src = "./pictures/gameBg.png";
@@ -126,6 +112,8 @@
           this.height = 50 + 32;
           this.gravity = 0.05;
           this.dead = false;
+          this.image =
+            bottleImages[Math.floor(Math.random() * bottleImages.length)];
         }
 
         update() {
@@ -145,7 +133,7 @@
 
         draw() {
           ctx.drawImage(
-            bottleImg,
+            this.image,
             this.x - this.width / 2,
             this.y - this.height,
             this.width,
