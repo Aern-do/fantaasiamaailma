@@ -6,8 +6,9 @@
     <title>BOW | Uudised</title>
     <link rel="stylesheet" href="styleuudisedvol2.css">
     <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-</style>
+      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <header>
@@ -79,27 +80,52 @@
     </div>
 
   </div>
-
-  
   <footer>
     <div class="footer-container">
-      <div class="footer-text">
+      <div class="footer-text" style="text-align: left; font-size: 14px;">
         <p>BOW Headquarters 12 Glassbridge Lane,<br> BOW District New Harbor,<br> BN 40211</p>
-        <p> © 2125 BOW. All rights reserved.
-</p>
+        <p> © 2125 BOW. All rights reserved.</p>
       </div>
       <div class="footer-icons">
-        <div class="icons">
-          <img src="images/insta.png" class="icons">
-          <p>Bottleface</p>
-        </div>
-        <div class="icons">
-          <img src="images/fb.png">
-          <p>Bottlebook</p>
-        </div>
+        <a href="#">
+          <div class="icons">
+            <img src="images/insta1.png" class="icons" width="46" height="46">
+            <p>InaBottle</p>
+          </div>
+        </a>
+        <a href="#">
+          <div class="icons">
+            <img src="images/fb1.png" width="46" height="46">
+            <p>Bottlebook</p>
+          </div>
+        </a>
       </div>
     </div>
   </footer>
-
+  <div class="popup-overlay" id="popupOverlay">
+  <div class="popup" id="popup">
+    <img src="images/popups.png" alt="Popup Image" class="popup-image">
+  </div>
+</div>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('popupOverlay');
+    const popup = document.getElementById('popup');
+    // Show popup after 1 second
+    setTimeout(() => {
+      overlay.style.display = 'flex';        // Show overlay
+      requestAnimationFrame(() => {          // Trigger animation on next frame
+        popup.classList.add('show');         // Add 'show' class to animate in
+      });
+    }, 1000);
+    // Close popup when clicked
+    popup.addEventListener('click', () => {
+      popup.classList.remove('show');        // Animate out
+      setTimeout(() => {
+        overlay.style.display = 'none';      // Then hide overlay after animation
+      }, 400); // Match transition duration
+    });
+  });
+</script>
 </body>
 </html>
